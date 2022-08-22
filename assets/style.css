@@ -1,0 +1,8 @@
+/* Adds a white border to split the bar from the dark color*/
+.nav-custom{
+  border-bottom: 1px solid white;
+}
+/*Adds a white border to split the bar from the dark color */
+.Nav-left-search-custom{
+  border-right: 1px solid white;
+}
