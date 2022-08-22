@@ -39,14 +39,21 @@ var day5temp = document.querySelector("#day5-temp");
 var day5wind = document.querySelector("#day5-wind");
 var day5humidity = document.querySelector("#day5-humidity");
 var day5time = document.querySelector("#time5");
+//Grabs Search Button
+var searchbtn = document.querySelector("#searchcustom");
 //Lets me store lat and lon
 var lat = 0;
 var lon = 0;
-
-var cityArray = [];
 //Sets apikey
 var apiKey = "2bf6b66810e81d2eaafabb9505c4eb18";
 
+cityArray = []
+
+currentweatherpic = document.querySelector("#current-logo")
+
+function toPascalCase(myString) {
+  return myString.replace(/\w\S*/g, m => m.charAt(0).toUpperCase() + m.substr(1).toLowerCase());
+}
 
 function saveCity(cityName) {
   // Only store the city if it hasn't been previously stored
@@ -84,15 +91,18 @@ function getCityWeather(cityName) {
 
 function buildCurrentWeather(cityName, data) {
   // Clear out current weather for search city
-  $("#currentWeather").empty();
   var today = moment().format('L');
 
   // Current day
   currentCity.textContent = (": " + cityName);
 
   // Current icon
-  var currentIcon = buildWeatherIcon(data.current.weather[0].icon);
+  //var currentIcon = buildWeatherIcon(data.current.weather[0].icon);
 
+  //currentweatherpic.textContent = buildWeatherIcon(data.current.weather[0].icon);
+
+  //Set the time for today
+  currenttime.textContent = (today)
   // Current temp
   currentTemp.textContent = (" " + data.current.temp + "F");
   // Current UV
@@ -161,29 +171,7 @@ austinbtn.addEventListener("click" , function (){
 
   var cityName = ("Austin")
 
-  var cityUrl = encodeURI(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=e21117d4bbcf0007c4027b6d47ffa12b`);
-
-  fetch(cityUrl, {
-    method: 'GET', //GET is the default.
-    credentials: 'same-origin', // include, *same-origin, omit
-    redirect: 'follow', // manual, *follow, error
-    cache: 'reload'  // Refresh the cache
-  })
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      lat = data[0].lat;
-      lon = data[0].lon;
-      // Save search city to local storage
-      saveCity(cityName);
-      // Get the weather for this city
-      getCityWeather(cityName);
-    })
-    .catch(error => {
-      alert('City entered is not valid.');
-    });
-  return;
+  geoInfo(cityName)
 })
 
 chicagobtn.addEventListener("click" , function (){
@@ -191,29 +179,7 @@ chicagobtn.addEventListener("click" , function (){
 
   var cityName = ("Chicago")
 
-  var cityUrl = encodeURI(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=e21117d4bbcf0007c4027b6d47ffa12b`);
-
-  fetch(cityUrl, {
-    method: 'GET', //GET is the default.
-    credentials: 'same-origin', // include, *same-origin, omit
-    redirect: 'follow', // manual, *follow, error
-    cache: 'reload'  // Refresh the cache
-  })
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      lat = data[0].lat;
-      lon = data[0].lon;
-      // Save search city to local storage
-      saveCity(cityName);
-      // Get the weather for this city
-      getCityWeather(cityName);
-    })
-    .catch(error => {
-      alert('City entered is not valid.');
-    });
-  return;
+  geoInfo(cityName);
 })
 
 newyorkbtn.addEventListener("click" , function (){
@@ -221,29 +187,7 @@ newyorkbtn.addEventListener("click" , function (){
 
   var cityName = ("New York")
 
-  var cityUrl = encodeURI(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=e21117d4bbcf0007c4027b6d47ffa12b`);
-
-  fetch(cityUrl, {
-    method: 'GET', //GET is the default.
-    credentials: 'same-origin', // include, *same-origin, omit
-    redirect: 'follow', // manual, *follow, error
-    cache: 'reload'  // Refresh the cache
-  })
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      lat = data[0].lat;
-      lon = data[0].lon;
-      // Save search city to local storage
-      saveCity(cityName);
-      // Get the weather for this city
-      getCityWeather(cityName);
-    })
-    .catch(error => {
-      alert('City entered is not valid.');
-    });
-  return;
+  geoInfo(cityName)
 })
 
 orlandobtn.addEventListener("click" , function (){
@@ -251,29 +195,7 @@ orlandobtn.addEventListener("click" , function (){
 
   var cityName = ("Orlando")
 
-  var cityUrl = encodeURI(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=e21117d4bbcf0007c4027b6d47ffa12b`);
-
-  fetch(cityUrl, {
-    method: 'GET', //GET is the default.
-    credentials: 'same-origin', // include, *same-origin, omit
-    redirect: 'follow', // manual, *follow, error
-    cache: 'reload'  // Refresh the cache
-  })
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      lat = data[0].lat;
-      lon = data[0].lon;
-      // Save search city to local storage
-      saveCity(cityName);
-      // Get the weather for this city
-      getCityWeather(cityName);
-    })
-    .catch(error => {
-      alert('City entered is not valid.');
-    });
-  return;
+  geoInfo(cityName)
 })
 
 sanfransicobtn.addEventListener("click" , function (){
@@ -281,29 +203,7 @@ sanfransicobtn.addEventListener("click" , function (){
 
   var cityName = ("San Fransico")
 
-  var cityUrl = encodeURI(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=e21117d4bbcf0007c4027b6d47ffa12b`);
-
-  fetch(cityUrl, {
-    method: 'GET', //GET is the default.
-    credentials: 'same-origin', // include, *same-origin, omit
-    redirect: 'follow', // manual, *follow, error
-    cache: 'reload'  // Refresh the cache
-  })
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      lat = data[0].lat;
-      lon = data[0].lon;
-      // Save search city to local storage
-      saveCity(cityName);
-      // Get the weather for this city
-      getCityWeather(cityName);
-    })
-    .catch(error => {
-      alert('City entered is not valid.');
-    });
-  return;
+  geoInfo(cityName)
 })
 
 seattlebtn.addEventListener("click" , function (){
@@ -311,29 +211,7 @@ seattlebtn.addEventListener("click" , function (){
 
   var cityName = ("Seattle")
 
-  var cityUrl = encodeURI(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=e21117d4bbcf0007c4027b6d47ffa12b`);
-
-  fetch(cityUrl, {
-    method: 'GET', //GET is the default.
-    credentials: 'same-origin', // include, *same-origin, omit
-    redirect: 'follow', // manual, *follow, error
-    cache: 'reload'  // Refresh the cache
-  })
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      lat = data[0].lat;
-      lon = data[0].lon;
-      // Save search city to local storage
-      saveCity(cityName);
-      // Get the weather for this city
-      getCityWeather(cityName);
-    })
-    .catch(error => {
-      alert('City entered is not valid.');
-    });
-  return;
+  geoInfo(cityName)
 })
 
 denverbtn.addEventListener("click" , function (){
@@ -341,29 +219,7 @@ denverbtn.addEventListener("click" , function (){
 
   var cityName = ("Denver")
 
-  var cityUrl = encodeURI(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=e21117d4bbcf0007c4027b6d47ffa12b`);
-
-  fetch(cityUrl, {
-    method: 'GET', //GET is the default.
-    credentials: 'same-origin', // include, *same-origin, omit
-    redirect: 'follow', // manual, *follow, error
-    cache: 'reload'  // Refresh the cache
-  })
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      lat = data[0].lat;
-      lon = data[0].lon;
-      // Save search city to local storage
-      saveCity(cityName);
-      // Get the weather for this city
-      getCityWeather(cityName);
-    })
-    .catch(error => {
-      alert('City entered is not valid.');
-    });
-  return;
+  geoInfo(cityName)
 })
 
 atlantabtn.addEventListener("click" , function (){
@@ -371,7 +227,11 @@ atlantabtn.addEventListener("click" , function (){
 
   var cityName = ("Atlanta")
 
-  var cityUrl = encodeURI(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=e21117d4bbcf0007c4027b6d47ffa12b`);
+  geoInfo(cityName)
+})
+
+function geoInfo(cityName){
+var cityUrl = encodeURI(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=e21117d4bbcf0007c4027b6d47ffa12b`);
 
   fetch(cityUrl, {
     method: 'GET', //GET is the default.
@@ -394,7 +254,24 @@ atlantabtn.addEventListener("click" , function (){
       alert('City entered is not valid.');
     });
   return;
-})
+  }
+
+// Adds fuctionality to the search button
+searchbtn.addEventListener("click", function (){
+  event.preventDefault();
+  // Get the city entereed
+  var searchinput = $("#search-input").val().trim();
+
+  //Verify a city name was entered
+  if (searchinput === "" || searchinput == "undefined") {
+    alert("Please enter a city name.")
+  } else {
+    // Pascalize the city name
+    searchinput = toPascalCase(searchinput);
+    // Get the city's Geo lat and lon to get weather
+    geoInfo(searchinput);
+  }
+});
 
 function buildWeatherIcon(iconName) {
   return `http://openweathermap.org/img/wn/${iconName}.png`;

@@ -24,7 +24,7 @@
       <!--Adds text in the search bar for representation-->
       <form id="search-form" class="mb-2">
         <input id="search-input" class="form-input w-100" type="text" placeholder="San Diego">
-        <button class="btn btn-info btn-block">Search</button>
+        <button id="searchcustom"class="btn btn-info btn-block">Search</button>
       </form>
       <!--Contains the buttons for common place-->
       <form>
@@ -45,6 +45,7 @@
           <!--The span tag below will be used to enter the info gained from the Api-->
           <h1 class="display-4">City<span id="current-city"></span></h1>
           <p id="current-time" class="lead"></p>
+          <img id="current-logo"></img>
           <p class="lead">Temp: <span id="current-temp"></span></p>
           <p class="lead">Wind: <span id="current-wind"></span></p>
           <p class="lead">Humidity: <span id="current-humidity"></span></p>
